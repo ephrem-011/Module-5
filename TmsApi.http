@@ -1,0 +1,19 @@
+@TmsApi_HostAddress = http://localhost:5239/
+POST {{TmsApi_HostAddress}}api/enrollments
+Content-Type: application/json
+Accept: application/json
+
+{
+    "StudentId" : "0200",
+    "CourseCode": "CS-07"
+}
+
+
+
+###
+###
+
+DELETE {{TmsApi_HostAddress}}api/enrollments/17123fbd
+Accept: application/json
+
+###
