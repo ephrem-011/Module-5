@@ -47,8 +47,8 @@ public IActionResult TestTranslationFail()
         });
     }
 }
-[HttpGet("a3")]
-public async Task<IActionResult> A3()
+[HttpGet("active-and-gpa-more-than-3")]
+public async Task<IActionResult> ActiveAndGpaMoreThan3()
     {
         var count = await context.Students.Where(s => s.IsActive && s.GPA >= 3.0m).CountAsync();
         return Ok(count);
