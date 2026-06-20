@@ -53,5 +53,39 @@ public async Task<IActionResult> ZeroEnrollments()
 .ToListAsync();
 return Ok(list);
     }
+
+[HttpGet("students")]
+public async Task<IActionResult> GetStudents(
+    int page = 1,
+    CancellationToken cancellationToken = default)
+{
+    const int pageSize = 10;
+
+    var students = await context.Students
+        .OrderBy(s => s.Name)
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync(cancellationToken);
+
+    return Ok(students);
+}
+
+[HttpGet("top-courses")]
+public async Task<IActionResult> GetTopCourses(
+    CancellationToken cancellationToken = default)
+{
+    var result = await context.Enrollments
+        .GroupBy(e => new { e.Course.Id, e.Course.Title })
+        .Select(g => new
+        {
+            CourseTitle = g.Key.Title,
+            EnrollmentCount = g.Count()
+        })
+        .OrderByDescending(x => x.EnrollmentCount)
+        .Take(5)
+        .ToListAsync(cancellationToken);
+
+    return Ok(result);
+}
 }
 
