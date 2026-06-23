@@ -20,5 +20,10 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
 
         builder.HasIndex(s => s.RegistrationNumber)
             .IsUnique();
+
+        builder.Property<DateTime>("LastUpdated");
+
+        // builder.Property(s => s.Version)
+        //     .IsRowVersion();
     }
 }

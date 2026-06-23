@@ -87,5 +87,37 @@ public async Task<IActionResult> GetTopCourses(
 
     return Ok(result);
 }
+[HttpGet("nplusone")]
+public async Task<IActionResult> NPlusOne()
+{
+    var students = await context.Students
+        .AsNoTracking()
+        .ToListAsync();
+
+    foreach (var s in students)
+    {
+        var count = await context.Enrollments
+            .AsNoTracking()
+            .CountAsync(e => e.StudentId == s.Id);
+
+        Console.WriteLine($"{s.Name}: {count} enrollments");
+    }
+
+    return Ok();
+}
+[HttpGet("nplusone-fixed")]
+public async Task<IActionResult> NPlusOneFixed()
+{
+    var report = await context.Students
+        .AsNoTracking()
+        .Select(s => new
+        {
+            s.Name,
+            EnrollmentCount = s.Enrollments.Count
+        })
+        .ToListAsync();
+
+    return Ok(report);
+}
 }
 
