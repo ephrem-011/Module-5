@@ -8,6 +8,6 @@ public class Student
     public bool IsActive { get; set; } = true;
     // Navigation property for many-to-many relationship
     public ICollection<Enrollment> Enrollments { get; set; } =new List<Enrollment>();
-    public uint Version { get; set; }
+    public uint Versionn { get; set; }
     public bool IsDeleted { get; set; }
 }
